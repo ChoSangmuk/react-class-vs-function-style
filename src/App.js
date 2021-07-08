@@ -2,11 +2,20 @@ import React, { Component, useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
+  const [funcShow, setFuncShow] = useState(true);
+  const [classShow, setClassShow] = useState(true);
+
   return (
-    <div className="container">
+    <div className="hello_container">
       <h1>Hello, World !</h1>
-      <FuncComp initNumber={2}></FuncComp>
-      <ClassComp initNumber={2}></ClassComp>
+      <input type="button" value="FuncComp Toggle" onClick={function () {
+        setFuncShow(!funcShow);
+      }} />
+      <input type="button" value="ClassComp Toggle" onClick={function () {
+        setClassShow(!classShow);
+      }} />
+      {funcShow ? <FuncComp initNumber={2} /> : null}
+      {classShow ? <ClassComp initNumber={2} /> : null}
     </div>
   );
 }
@@ -18,36 +27,27 @@ function FuncComp(props) {
   var [_date, setDate] = useState((new Date()).toString());
 
   useEffect(function () {
-    console.log("%cfunc => useEffect [] " + (++funcId), funcStyle);
+    console.log("%cfunc => SideEffect " + (++funcId), funcStyle);
     return function () {
-      console.log("%cfunc => useEffect return [] " + (++funcId), funcStyle);
+      console.log("%cfunc => CleanUp " + (++funcId), funcStyle);
+    }
+  });
+  useEffect(function () {
+    console.log("%cfunc => SideEffect [] (componentDidMount) " + (++funcId), funcStyle);
+    return function () {
+      console.log("%cfunc => CleanUp [] (componentWillUnmount) " + (++funcId), funcStyle);
     }
   }, []);
-
   useEffect(function () {
-    console.log("%cfunc => useEffect [number] " + (++funcId), funcStyle);
+    console.log("%cfunc => SideEffect [number, _date] " + (++funcId), funcStyle);
     return function () {
-      console.log("%cfunc => useEffect return [number] " + (++funcId), funcStyle);
-    }
-  }, [number]);
-
-  useEffect(function () {
-    console.log("%cfunc => useEffect [_date] " + (++funcId), funcStyle);
-    return function () {
-      console.log("%cfunc => useEffect return [_date] " + (++funcId), funcStyle);
-    }
-  }, [_date]);
-
-  useEffect(function () {
-    console.log("%cfunc => useEffect [number, _date] " + (++funcId), funcStyle);
-    return function () {
-      console.log("%cfunc => useEffect return [number, _date] " + (++funcId), funcStyle);
+      console.log("%cfunc => CleanUp [number, _date] " + (++funcId), funcStyle);
     }
   }, [number, _date]);
 
-  console.log("%cfunc => return " + (++funcId), funcStyle);
+  console.log("%cfunc => return (render) " + (++funcId), funcStyle);
   return (
-    <div className="container">
+    <div className="function_container">
       <h2>function style component</h2>
       <p>Number : {number}</p>
       <p>Date : {_date}</p>
@@ -92,7 +92,7 @@ class ClassComp extends Component {
   render() {
     console.log("%cclass => render " + (++classId), classStyle);
     return (
-      <div className="container">
+      <div className="class_container">
         <h2>class style component</h2>
         <p>Number : {this.state.number}</p>
         <p>Date : {this.state.date}</p>
