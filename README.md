@@ -4,6 +4,7 @@
 - [생활코딩 홈페이지](https://opentutorials.org/module/4600)
 - [Youtube divide](https://www.youtube.com/watch?v=iY_vmP-Q3Ak&list=PLuHgQVnccGMCEfBwnNGsJCQDiqSWI-edj)
 - [강사 github](https://github.com/egoing/react-function-vs-class-style)
+- [GitHub Pages](https://chosangmuk.github.io/react-class-vs-function-style/)
 
 ## 섹션 0. 오리엔테이션
 ### 1. 수업 소개
@@ -343,3 +344,37 @@ function App() {
 - Hook을 만들 때 규칙
 - 사용자 정의 Hook 
 - 기타 내장 Hook
+
+## GitHub Pages 배포
+- gh-pages 설치
+```sh
+# Shell
+npm i gh-pages 
+
+# Check Username, projectName
+git remote -v
+# origin  https://github.com/ChoSangmuk/react-class-vs-function-style (fetch)
+# origin  https://github.com/ChoSangmuk/react-class-vs-function-style (push)
+```
+- package.json 설정
+```json
+// package.json ...
+"scripts": {
+  // ...
+  "predeploy":"npm run build",
+  "deploy":"gh-pages -d build"
+},
+// ...
+"homepage": "https://chosangmuk.github.io/react-class-vs-function-style"
+```
+- 배포 실행
+```sh
+# Shell
+# config git 
+git config --global user.email "tkdanr612@gmail.com"
+git config --global user.name "ChoSangmuk"
+
+# deploy
+npm run deploy
+# ChoSangmuk/pw
+```
